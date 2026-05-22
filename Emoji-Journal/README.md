@@ -1,6 +1,6 @@
-# Private Context Compressor
+# Privacy Context Compressor
 
-Private Context Compressor is a SwiftUI prototype for a real Apple Intelligence systems problem: compressing personal context for on-device foundation model workflows while preserving privacy.
+Privacy Context Compressor is a SwiftUI prototype for a real Apple Intelligence systems problem: compressing personal context for on-device foundation model workflows while preserving privacy.
 
 Apple Intelligence is designed around personal context, on-device processing, and Private Cloud Compute for requests that need larger models. That creates a practical engineering problem on iPhone, iPad, Mac, and Apple Watch: personal context can improve local intelligence, but context derived from Mail, Notes, Photos, Calendar, Health, Siri, keyboard behavior, notifications, and app activity can be large, sensitive, and expensive to store or process repeatedly.
 
@@ -8,7 +8,7 @@ This project implements a local simulator for learning a context compression pol
 
 ## Real Use Case
 
-The use case is private context compression for Apple Intelligence style features.
+The use case is privacy-preserving context compression for Apple Intelligence style features.
 
 Examples of context-heavy features:
 
@@ -40,7 +40,7 @@ Apple has publicly described Apple Intelligence as a personal intelligence syste
 
 ## Implemented Solution
 
-Private Context Compressor models a privacy-preserving federated learning pipeline:
+Privacy Context Compressor models a privacy-preserving federated learning pipeline:
 
 1. Each device observes local compression outcomes for personal context caches.
 2. The local objective balances compression ratio, latency, quality loss, and memory pressure.
@@ -55,9 +55,9 @@ The current app is a simulator. It does not train a production model or contact 
 ## Project Structure
 
 ```text
-PrivateContextCompressor/
+PrivacyContextCompressor/
   App/
-    PrivateContextCompressorApp.swift
+    PrivacyContextCompressorApp.swift
   Data/
     SystemsKnowledgeBase.swift
   Models/
@@ -138,7 +138,7 @@ The trainer simulates federated rounds by:
 
 Possible recommendations include:
 
-- Balanced private context compression.
+- Balanced privacy context compression.
 - Low-latency Apple Intelligence context cache.
 - Memory-pressure aware context compression.
 - Quality-preserving personal context cache.
@@ -182,8 +182,8 @@ Privacy engineering principles:
 ## Suggested Xcode Setup
 
 1. Create a new SwiftUI app project in Xcode.
-2. Name the app `PrivateContextCompressor`.
-3. Copy the `PrivateContextCompressor` folder into the Xcode project.
+2. Name the app `PrivacyContextCompressor`.
+3. Copy the `PrivacyContextCompressor` folder into the Xcode project.
 4. Add all Swift files to the app target.
 5. Add `Resources/PrivacyInfo.xcprivacy` to the app target.
 6. Set the deployment target to iOS 17 or macOS 14.
@@ -222,4 +222,4 @@ macos
 
 ## Positioning
 
-Private Context Compressor is a focused Apple ML systems prototype. It demonstrates how on-device intelligence, privacy-preserving federated learning, and data compression tradeoffs can work together for a real Apple platform problem: using personal context without collecting personal content.
+Privacy Context Compressor is a focused Apple ML systems prototype. It demonstrates how on-device intelligence, privacy-preserving federated learning, and data compression tradeoffs can work together for a real Apple platform problem: using personal context without collecting personal content.
