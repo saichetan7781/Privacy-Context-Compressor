@@ -25,6 +25,7 @@ struct SystemsDashboardView: View {
                 VStack(alignment: .leading, spacing: 20) {
                     HeroPanel(domain: selectedDomain)
                     PrivacyPanel(privacy: privacy)
+                    FederatedCompressionPanel()
                     CoreMLReadinessPanel(computeUnits: selectedCompute)
                     DomainMetricsPanel(domain: selectedDomain)
                     NotesDetailPanel(note: selectedNote ?? filteredNotes.first)

@@ -11,6 +11,7 @@ The project is structured as a portfolio-quality Apple codebase rather than a si
 - Cover high-performance computing with Metal, Metal Performance Shaders, Accelerate, BNNS, vDSP, and memory-aware programming.
 - Cover Core OS topics such as scheduling, memory pressure, sandboxing, file I/O, security, and observability.
 - Include privacy controls and privacy engineering notes as first-class app features.
+- Implement a real privacy-preserving federated learning use case inspired by error-bounded data compression research.
 - Organize the codebase in a maintainable Apple-style folder structure.
 
 ## Repository Structure
@@ -26,9 +27,11 @@ AppleSystemsLab/
     SystemsDomain.swift
     SystemsMetric.swift
     SystemsNote.swift
+    CompressionUseCase.swift
   Resources/
     PrivacyInfo.xcprivacy
   Services/
+    FederatedCompressionTrainer.swift
     PrivacyPreferences.swift
   Views/
     Components/
@@ -43,6 +46,7 @@ AppleSystemsLab/
       NativeFrameworkMap.swift
       NotesDetailPanel.swift
       PrivacyPanel.swift
+      FederatedCompressionPanel.swift
     SystemsDashboardView.swift
 ```
 
@@ -77,6 +81,49 @@ The on-device AI section focuses on local inference and privacy-preserving user 
 - CPU fallback behavior.
 - Minimal telemetry design.
 - Secure handling of user-derived features.
+
+### Federated Compression Use Case
+
+This project includes a concrete ML systems use case derived from the data compression work: adaptive on-device compression for Core ML feature caches and model summaries.
+
+Modern Apple devices increasingly run local intelligence workloads for photos, text, audio, health, search, personalization, and app intents. These workloads can produce intermediate feature tensors, embeddings, semantic caches, and model summaries. Storing or synchronizing those artifacts naively can cost memory, latency, battery, and storage. Uploading the raw artifacts would also create privacy risk.
+
+Apple-relevant problem statement:
+
+```text
+Learn a compression policy across many devices without collecting private raw data.
+```
+
+The app models a privacy-preserving federated learning workflow:
+
+1. Each device observes local compression outcomes for Core ML feature caches.
+2. The local objective balances compression ratio, latency, quality loss, and memory pressure.
+3. The device computes a local policy update.
+4. The update is clipped to bound contribution size.
+5. Differential privacy noise is added.
+6. Only the protected update is aggregated.
+7. Raw photos, audio, health data, text, prompts, and feature tensors stay on device.
+
+The implemented simulator lives in:
+
+```text
+Models/CompressionUseCase.swift
+Services/FederatedCompressionTrainer.swift
+Views/Panels/FederatedCompressionPanel.swift
+```
+
+The simulator uses synthetic local device samples for workloads such as:
+
+- Core ML vision feature caches
+- Personal audio embedding caches
+- On-device search index vectors
+- AR scene understanding features
+- Health trend model summaries
+- Siri local intent embeddings
+- Photos semantic caches
+- Keyboard personalization features
+
+This mirrors the compression tradeoff from the CAESAR project: tighter error bounds improve quality but increase correction payload, runtime, and memory pressure. In this app, that systems idea becomes an on-device policy problem that can be learned privately.
 
 ### High-Performance Computing
 
@@ -132,6 +179,9 @@ Current privacy controls:
 - Sensitive note redaction.
 - Data minimization mode.
 - Export review mode.
+- Federated update clipping.
+- Differential privacy noise for shared updates.
+- No raw feature upload.
 
 Current privacy engineering notes:
 
@@ -141,6 +191,8 @@ Current privacy engineering notes:
 - Redact sensitive note text before generating summaries.
 - Treat exports as an explicit user action.
 - Use OSLog carefully and avoid logging private payloads.
+- Share only protected model or policy updates in federated workflows.
+- Keep the privacy budget visible when simulating or deploying federated learning.
 
 The project also includes a starter `PrivacyInfo.xcprivacy` file. In a full Xcode app, this file should be included in the app target and updated whenever the app starts collecting data, tracking users, or accessing privacy-sensitive APIs.
 

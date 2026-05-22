@@ -45,6 +45,20 @@ enum SystemsKnowledgeBase {
             priority: .optimization
         ),
         .init(
+            domain: .federatedCompression,
+            title: "Federated Compression Policy",
+            body: "Learn how aggressively to compress Core ML feature caches from local device outcomes. Devices share clipped noisy policy updates, not raw photos, audio, health data, text, or feature tensors.",
+            frameworks: ["CoreML", "CryptoKit", "MetricKit"],
+            priority: .privacy
+        ),
+        .init(
+            domain: .federatedCompression,
+            title: "Compression Objective",
+            body: "Optimize a multi-objective policy that balances compression ratio, latency, quality loss, and memory pressure. This mirrors the CAESAR error-bound tradeoff while moving the decision policy onto Apple devices.",
+            frameworks: ["Accelerate", "Metal", "CoreML"],
+            priority: .optimization
+        ),
+        .init(
             domain: .coreOS,
             title: "Core OS Mental Model",
             body: "Treat memory pressure, scheduling, file coordination, sandboxing, and entitlement boundaries as first-class design constraints for Apple platforms.",
